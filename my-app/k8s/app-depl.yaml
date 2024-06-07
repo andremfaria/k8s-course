@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: my-app
+          image: my-app
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env: 
+            - name: REDIS_HOST
+              valueFrom: 
+                configMapKeyRef:
+                  name: app-configmap
+                  key: redis_host
+            - name: REDIS_PORT
+              valueFrom: 
+                configMapKeyRef:
+                  name: app-configmap
+                  key: redis_port

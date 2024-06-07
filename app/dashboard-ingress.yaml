@@ -1,0 +1,24 @@
+# To work with minikube you need to execute first: minikube dashboard
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+  namespace: kubernetes-dashboard
+spec:
+  ingressClassName: "nginx"
+  # Enables https
+  tls: 
+  - hosts:
+    - dashboard.com
+    secretName: dashboard-secret
+  rules:
+  - host: dashboard.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port: 
+              number: 80

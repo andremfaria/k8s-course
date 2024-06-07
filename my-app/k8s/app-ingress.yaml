@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+spec:
+  ingressClassName: "nginx"
+  rules:
+  - host: my-app.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: app-service
+            port: 
+            # this needs to match service port number
+              number: 3000
